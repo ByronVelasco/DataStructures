@@ -42,6 +42,19 @@ These methods are essential for maintaining the heap property after any operatio
 - **Checking if the heap is empty** is a constant-time operation.
 - **Searching for a value** (not by priority) is linear, as the heap does not guarantee order except for the heap property.
 
+### Applications
+
+Max Heaps are widely used in various fields and applications where efficient access to the largest element is required. Some common use cases include:
+
+- **Priority Queues:** Max Heaps are the underlying data structure for priority queues, where elements with higher priority (larger values) are served before others. This is useful in operating systems for task scheduling, bandwidth management, and simulation systems.
+- **Heap Sort:** Max Heaps are used to implement the Heap Sort algorithm, an efficient comparison-based sorting technique with O(n log n) time complexity.
+- **Graph Algorithms:** In algorithms like Dijkstra’s shortest path (for finding the longest path in some variations) and Prim’s algorithm (for maximum spanning trees), Max Heaps can be used to efficiently select the next vertex with the highest priority.
+- **Real-Time Systems:** Max Heaps help manage resources and tasks that require immediate attention based on their priority.
+- **Data Stream Processing:** Max Heaps are used to maintain the top-k largest elements in a dynamically updating dataset, such as finding the k largest numbers in a stream.
+- **Load Balancing:** In distributed systems, Max Heaps can help assign tasks to the most capable servers by always selecting the server with the highest available capacity.
+
+Max Heaps are especially useful in any context where you need to repeatedly access, insert, or remove the largest element efficiently.
+
 ## **2. Min Heap**
 
 A **Min Heap** is a binary heap data structure where the parent node is always less than or equal to its child nodes. This property ensures that the smallest element is always at the root of the heap, making it efficient for priority queue operations where quick access to the minimum element is required.
@@ -76,6 +89,19 @@ A **Min Heap** is a binary heap data structure where the parent node is always l
 - **Updating a value** requires searching for the value (O(n)), then sifting up or down (O(log n)), so the total is O(n + log n).
 - **Checking if the heap is empty** is a constant-time operation.
 - **Searching for a value** (not by priority) is linear, as the heap does not guarantee order except for the heap property.
+
+### Applications
+
+Min Heaps are widely used in scenarios where efficient access to the smallest element is required. Common applications include:
+
+- **Priority Queues:** Min Heaps are the foundation for priority queues where elements with the lowest value (highest priority) are served first. This is useful in operating systems for process scheduling, event-driven simulations, and bandwidth management.
+- **Heap Sort:** Min Heaps can be used to implement Heap Sort, allowing for efficient sorting of elements in descending order.
+- **Graph Algorithms:** Algorithms such as Dijkstra’s shortest path and Prim’s minimum spanning tree use Min Heaps to efficiently select the next vertex with the smallest weight or cost.
+- **Event Management:** In simulations and real-time systems, Min Heaps help manage events by always processing the event with the earliest timestamp or lowest priority value.
+- **Data Stream Processing:** Min Heaps are used to maintain the k smallest elements in a dynamically updating dataset, such as finding the k smallest numbers in a stream.
+- **Merging Sorted Lists:** Min Heaps are used in algorithms that merge multiple sorted lists or arrays, such as in external sorting or database query processing.
+
+Min Heaps are especially useful in any context where you need to repeatedly access, insert, or remove the smallest element efficiently.
 
 ---
 © 2025 Byron Velasco
