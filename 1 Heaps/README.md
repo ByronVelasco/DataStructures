@@ -8,11 +8,12 @@ A **Max Heap** is a binary heap data structure where the parent node is always g
 
 - `self.heap`: A list that maintains the max heap property, where each parent node is greater than or equal to its children.
 - `self.size`: An integer representing the current number of elements in the heap.
+- `self.max_size`: An integer representing the maximum size of the heap, which is useful for initializing the heap with a fixed capacity. Setting this to `None` (by default) allows for dynamic resizing.
 
 ### Public Methods
 
 - `is_empty()`: Returns `True` if the heap is empty, otherwise `False`.
-- `insert(value)`: Inserts a new element into the heap while maintaining the max heap property.
+- `insert(value)`: Inserts a new element into the heap while maintaining the max heap property. If `self.max_size` is set, it checks if the heap has reached its maximum size before inserting.
 - `priority()`: Returns the maximum element (the root) of the heap without removing it.
 - `extract_priority()`: Removes and returns the maximum element from the heap, maintaining the max heap property.
 - `index(value)`: Returns the index of the specified value in the heap, or `None` if the value is not found.
@@ -63,11 +64,12 @@ A **Min Heap** is a binary heap data structure where the parent node is always l
 
 - `self.heap`: A list that maintains the min heap property, where each parent node is less than or equal to its children.
 - `self.size`: An integer representing the current number of elements in the heap.
+- `self.max_size`: An integer representing the maximum size of the heap, which is useful for initializing the heap with a fixed capacity. Setting this to `None` (by default) allows for dynamic resizing.
 
 ### Public Methods
 
 - `is_empty()`: Returns `True` if the heap is empty, otherwise `False`.
-- `insert(value)`: Inserts a new element into the heap while maintaining the min heap property.
+- `insert(value)`: Inserts a new element into the heap while maintaining the min heap property. If `self.max_size` is set, it checks if the heap has reached its maximum size before inserting.
 - `priority()`: Returns the minimum element (the root) of the heap without removing it.
 - `extract_priority()`: Removes and returns the minimum element from the heap, maintaining the min heap property.
 - `index(value)`: Returns the index of the specified value in the heap, or `None` if the value is not found.
