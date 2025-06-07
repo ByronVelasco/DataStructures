@@ -9,18 +9,18 @@ A **Max Heap** is a binary heap data structure where the parent node is always g
 - `self.heap`: A list that maintains the max heap property, where each parent node is greater than or equal to its children.
 - `self.size`: An integer representing the current number of elements in the heap.
 - `self.max_size`: An integer representing the maximum size of the heap, which is useful for initializing the heap with a fixed capacity. Setting this to `None` (by default) allows for dynamic resizing.
+- `self.max`: An integer representing the maximum value in the heap, which is updated whenever an element is inserted or removed.
 
 ### Public Methods
 
 - `is_empty()`: Returns `True` if the heap is empty, otherwise `False`.
 - `insert(value)`: Inserts a new element into the heap while maintaining the max heap property. If `self.max_size` is set, it checks if the heap has reached its maximum size before inserting.
-- `priority()`: Returns the maximum element (the root) of the heap without removing it.
-- `extract_priority()`: Removes and returns the maximum element from the heap, maintaining the max heap property.
-- `index(value)`: Returns the index of the specified value in the heap, or `None` if the value is not found.
+- `extract_max()`: Removes and returns the maximum element from the heap, maintaining the max heap property.
 - `update_value(old, new)`: Updates an element with the specified old value to a new value, ensuring the max heap property is preserved.
 
 ### Private methods
 
+- `_update_max()`: Updates the `max` attribute to the maximum value in the heap.
 - `_sift_up(index)`: Moves the element at the given index up the heap until the max heap property is restored.
 - `_sift_down(index)`: Moves the element at the given index down the heap until the max heap property is restored.
 
@@ -30,18 +30,16 @@ These methods are essential for maintaining the heap property after any operatio
 
 | Operation             | Time Complexity |
 |-----------------------|----------------|
-| Insertion             | O(log n)       |
-| Extract Max (Root)    | O(log n)       |
+| Insertion             | O(lg n)       |
+| Extract Max (Root)    | O(lg n)       |
 | Get Max (Priority)    | O(1)           |
-| Update Value          | O(n + log n)   |
-| is_empty()            | O(1)           |
-| Search (by value)     | O(n)           |
+| Update Value          | O(n + lg n)   |
+| Check emptiness       | O(1)           |
 
 - **Insertion** and **extraction** require reordering the heap, which takes logarithmic time.
 - **Getting the maximum** element is always O(1) since it is at the root.
-- **Updating a value** requires searching for the value (O(n)), then sifting up or down (O(log n)), so the total is O(n + log n).
+- **Updating a value** requires searching for the value (O(n)), then sifting up or down (O(lg n)), so the total is O(n + lg n).
 - **Checking if the heap is empty** is a constant-time operation.
-- **Searching for a value** (not by priority) is linear, as the heap does not guarantee order except for the heap property.
 
 ### Applications
 
@@ -65,32 +63,36 @@ A **Min Heap** is a binary heap data structure where the parent node is always l
 - `self.heap`: A list that maintains the min heap property, where each parent node is less than or equal to its children.
 - `self.size`: An integer representing the current number of elements in the heap.
 - `self.max_size`: An integer representing the maximum size of the heap, which is useful for initializing the heap with a fixed capacity. Setting this to `None` (by default) allows for dynamic resizing.
+- `self.min`: An integer representing the minimum value in the heap, which is updated whenever an element is inserted or removed.
 
 ### Public Methods
 
 - `is_empty()`: Returns `True` if the heap is empty, otherwise `False`.
 - `insert(value)`: Inserts a new element into the heap while maintaining the min heap property. If `self.max_size` is set, it checks if the heap has reached its maximum size before inserting.
-- `priority()`: Returns the minimum element (the root) of the heap without removing it.
-- `extract_priority()`: Removes and returns the minimum element from the heap, maintaining the min heap property.
-- `index(value)`: Returns the index of the specified value in the heap, or `None` if the value is not found.
+- `extract_min()`: Removes and returns the minimum element from the heap, maintaining the min heap property.
 - `update_value(old, new)`: Updates an element with the specified old value to a new value, ensuring the min heap property is preserved.
+
+### Private methods
+
+- `_update_min()`: Updates the `min` attribute to the minimum value in the heap.
+- `_sift_up(index)`: Moves the element at the given index up the heap until the min heap property is restored.
+- `_sift_down(index)`: Moves the element at the given index down the heap until the min heap property is restored.
+These methods are essential for maintaining the heap property after any operation that modifies the structure or values of the heap.
 
 ### Time Complexity
 
 | Operation             | Time Complexity |
 |-----------------------|----------------|
-| Insertion             | O(log n)       |
-| Extract Min (Root)    | O(log n)       |
+| Insertion             | O(lg n)       |
+| Extract Min (Root)    | O(lg n)       |
 | Get Min (Priority)    | O(1)           |
-| Update Value          | O(n + log n)   |
-| is_empty()            | O(1)           |
-| Search (by value)     | O(n)           |
+| Update Value          | O(n + lg n)   |
+| Check emptiness       | O(1)           |
 
 - **Insertion** and **extraction** require reordering the heap, which takes logarithmic time.
 - **Getting the minimum** element is always O(1) since it is at the root.
-- **Updating a value** requires searching for the value (O(n)), then sifting up or down (O(log n)), so the total is O(n + log n).
+- **Updating a value** requires searching for the value (O(n)), then sifting up or down (O(lg n)), so the total is O(n + lg n).
 - **Checking if the heap is empty** is a constant-time operation.
-- **Searching for a value** (not by priority) is linear, as the heap does not guarantee order except for the heap property.
 
 ### Applications
 
