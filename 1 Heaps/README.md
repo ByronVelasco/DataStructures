@@ -8,13 +8,13 @@ A **Max Heap** is a binary heap data structure where the parent node is always g
 
 - `self.heap`: A list that maintains the max heap property, where each parent node is greater than or equal to its children.
 - `self.size`: An integer representing the current number of elements in the heap.
-- `self.max_size`: An integer representing the maximum size of the heap, which is useful for initializing the heap with a fixed capacity. Setting this to `None` (by default) allows for dynamic resizing.
+- `self.max_size`: An integer representing the maximum size of the heap, which is useful for initializing the heap with a fixed capacity.
 - `self.max`: An integer representing the maximum value in the heap, which is updated whenever an element is inserted or removed.
 
 ### Public Methods
 
 - `is_empty()`: Returns `True` if the heap is empty, otherwise `False`.
-- `insert(value)`: Inserts a new element into the heap while maintaining the max heap property. If `self.max_size` is set, it checks if the heap has reached its maximum size before inserting.
+- `insert(value)`: Inserts a new element while maintaining the max heap property.
 - `extract_max()`: Removes and returns the maximum element from the heap, maintaining the max heap property.
 - `update_value(old, new)`: Updates an element with the specified old value to a new value, ensuring the max heap property is preserved.
 
@@ -62,13 +62,13 @@ A **Min Heap** is a binary heap data structure where the parent node is always l
 
 - `self.heap`: A list that maintains the min heap property, where each parent node is less than or equal to its children.
 - `self.size`: An integer representing the current number of elements in the heap.
-- `self.max_size`: An integer representing the maximum size of the heap, which is useful for initializing the heap with a fixed capacity. Setting this to `None` (by default) allows for dynamic resizing.
+- `self.max_size`: An integer representing the maximum size of the heap, which is useful for initializing the heap with a fixed capacity.
 - `self.min`: An integer representing the minimum value in the heap, which is updated whenever an element is inserted or removed.
 
 ### Public Methods
 
 - `is_empty()`: Returns `True` if the heap is empty, otherwise `False`.
-- `insert(value)`: Inserts a new element into the heap while maintaining the min heap property. If `self.max_size` is set, it checks if the heap has reached its maximum size before inserting.
+- `insert(value)`: Inserts a new element into the heap while maintaining the min heap property.
 - `extract_min()`: Removes and returns the minimum element from the heap, maintaining the min heap property.
 - `update_value(old, new)`: Updates an element with the specified old value to a new value, ensuring the min heap property is preserved.
 
