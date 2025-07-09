@@ -1,38 +1,36 @@
-# **Stacks**
+# **Queues**
 
-A **Stack** is a linear data structure that follows the Last-In, First-Out (LIFO) principle. This means that the last element added to the stack is the first one to be removed. For example, think of a stack of plates where you can only add or remove the top plate.
+A **Queue** is a linear data structure that follows the First-In, First-Out (FIFO) principle. This means that the first element added to the queue is the first one to be removed. For example, think of a line of people waiting at a store where the first person in line is the first one to be served.
 
 ## Attributes
-- `self.stack`: A list that holds the elements of the stack.
-- `self.size`: An integer representing the current number of elements in the stack.
-- `self.max_size`: An integer representing the maximum size of the stack, which is useful for initializing the stack with a fixed capacity. Setting this to `None` (by default) allows for dynamic resizing.
-- `self.top`: An integer representing the top element of the stack, which is updated whenever an element is pushed or popped.
+- `self.queue`: A list that holds the elements of the queue.
+- `self.size`: An integer representing the current number of elements in the queue.
+- `self.max_size`: An integer representing the maximum size of the queue, which is useful for initializing the queue with a fixed capacity.
+- `self.head_index`: An integer representing the index of the front element of the queue, which is updated whenever an element is enqueued or dequeued.
+- `self.tail_index`: An integer representing the index of the last element in the queue, which is updated whenever an element is enqueued.
 
 ## Public Methods
-- `is_empty()`: Returns `True` if the stack is empty, otherwise `False`.
-- `push(value)`: Adds a new element to the top of the stack. If `self.max_size` is set, it checks if the stack has reached its maximum size before pushing.
-- `pop()`: Removes and returns the top element from the stack. If the stack is empty, shows an message indicating that the stack is empty.
-
-## Private Methods
-- `_update_top()`: Updates the `top` attribute to the current top element of the stack.
+- `is_empty()`: Returns `True` if the queue is empty, otherwise `False`.
+- `enqueue(item)`: Adds an item to the end of the queue. If the queue is full, it warns that the queue is full and does not add the item.
+- `dequeue()`: Removes and returns the item at the front of the queue. If the queue is empty, it warns that the queue is empty and does not remove any item.
+- `head()`: Returns the item at the front of the queue without removing it. If the queue is empty, it warns that the queue is empty and returns `None`.
 
 ## Time Complexity
 | Operation   | Time Complexity |
 |-------------|-----------------|
-| Push        | O(1)            |
-| Pop         | O(1)            |
-| Check emptiness | O(1)            |
+| Enqueue     | O(1)            |
+| Dequeue     | O(1)            |
+| Check emptiness | O(1)        |
+| Show head   | O(1)            |
 
-- **Push** and **pop** operations are constant time since they only involve adding or removing the top element.
-- **Checking if the stack is empty** is also a constant-time operation.
+- **Enqueue** and **Dequeue** operations are O(1) because they involve adding or removing an element from the front or back of the queue without needing to traverse the entire structure.
+- **Check emptiness** and **Show head** operations are also O(1) because they simply check the state of the queue or return the front element without modifying the queue.
 
 ## Applications
-Stacks are widely used in various applications due to their LIFO nature. Some common use cases include:
-- **Function Call Management:** Stacks are used to manage function calls in programming languages, where each function call is pushed onto the stack, and when it returns, it is popped off the stack.
-- **Expression Evaluation:** Stacks are used in parsing and evaluating expressions, such as converting infix expressions to postfix or prefix notation.
-- **Backtracking Algorithms:** Stacks are used in algorithms that require backtracking, such as depth-first search (DFS) in graphs or tree traversals.
-- **Undo Mechanisms:** Stacks are used in applications that require an undo feature, where each action is pushed onto the stack, and when the user wants to undo an action, it is popped off the stack.
-- **Memory Management:** Stacks are used in memory management for allocating and deallocating memory in a last-in, first-out manner.
+Queues are widely used in various applications, including:
+- **Task Scheduling**: Managing tasks in operating systems where processes are scheduled in the order they arrive.
+- **Breadth-First Search (BFS)**: In graph algorithms, queues are used to explore nodes level by level.
+- **Print Spooling**: Managing print jobs in a printer queue where the first job submitted is the first to be printed.
 
 ---
 © 2025 Byron Velasco

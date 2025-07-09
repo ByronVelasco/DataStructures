@@ -1,12 +1,18 @@
 class MaxHeap:
-	def __init__(self):
+	def __init__(self, max_size):
 		# Initialize an empty list to represent the heap
 		self.heap = []
 		self.size = 0
+		self.max_size = max_size  # Set the maximum allowed size
+		self.max = None      # Attribute to store the current max value
 
 	def __str__(self):
 		# Return a string representation of the heap
 		return str(self.heap)
+
+	def _update_max(self):
+		# Update the max attribute to the first element or None if empty
+		self.max = self.heap[0] if not self.is_empty() else None
 	
 	def _sift_up(self, index):
 		# Sift up the element at the given index
@@ -16,6 +22,7 @@ class MaxHeap:
 			self.heap[index], self.heap[parent] = self.heap[parent], self.heap[index]
 			index = parent
 			parent = (index - 1) // 2
+		self._update_max()
 
 	def _sift_down(self, index):
 		# Sift down the element at the given index
@@ -35,49 +42,44 @@ class MaxHeap:
 			# Swap the current element with the largest child
 			self.heap[index], self.heap[largest] = self.heap[largest], self.heap[index]
 			index = largest
+		self._update_max()
 
 	def is_empty(self):
 		# Check if the heap is empty
 		return self.size == 0
 
 	def insert(self, value):
-		# Add the new value to the end of the heap
+		# Add the new value to the end of the heap if not full (when max_size is set)
+		if self.size == self.max_size:
+			print("Heap is at maximum capacity. Cannot insert new value.")
+			return
 		self.heap.append(value)
 		self.size += 1
 		# Restore the max-heap property by sifting up
 		self._sift_up(self.size - 1)
-		
-	def priority(self):
-		# Return the maximum element in the heap
-		if self.is_empty():
-			return None
-		return self.heap[0]
 	
-	def extract_priority(self):
-		# Remove and return the maximum element in the heap
+	def extract_max(self):
 		if self.is_empty():
-			return None
-		priority = self.priority()
+			print("Heap is empty. Cannot extract maximum.")
+			return
+		# Remove and return the maximum element in the heap
+		maximum = self.max
 		# Move the last element to the root and remove it from the heap
 		self.heap[0] = self.heap[-1]
 		self.heap.pop()
 		self.size -= 1
 		# Restore the max-heap property by sifting down
-		self._sift_down(0)
-		return priority
-	
-	def index(self, value):
-		# Return the index of the given value in the heap
-		try:
-			return self.heap.index(value)
-		except ValueError:
-			return None
+		if self.size > 0:
+			self._sift_down(0)
+		self._update_max()
+		return maximum
 
 	def update_value(self, old, new):
 		# Check if the old value exists in the heap
-		index = self.index(old)
-		if index is None:
-			print(f"Value {old} not found in the heap.")
+		try:
+			index = self.heap.index(old)
+		except ValueError:
+			print(f"Value {old} not found in the heap. Cannot update.")
 			return
 		# Update the value at the found index
 		self.heap[index] = new
@@ -89,25 +91,26 @@ class MaxHeap:
 			
 
 class MinHeap(MaxHeap):
-	"""
-	Inherited methods:
-		- index(value): Returns the index of a given value in the heap.
-		- priority(): Returns the minimum element in the heap.
-		- extract_priority(): Removes and returns the minimum element from the heap.
-	"""
+	def __init__(self, max_size):
+		super().__init__(max_size)
+		del self.max # Remove the max attribute from MaxHeap
+		self.min = None  # Attribute to store the current min value
+
+	def _update_min(self):
+		# Update the min attribute to the first element or None if empty
+		self.min = self.heap[0] if not self.is_empty() else None
 
 	def _sift_up(self, index):
 		# Sift up the element at the given index for min-heap
 		parent = (index - 1) // 2
 		while index > 0 and self.heap[index] < self.heap[parent]:
-			# Swap the current element with its parent
 			self.heap[index], self.heap[parent] = self.heap[parent], self.heap[index]
 			index = parent
 			parent = (index - 1) // 2
+		self._update_min()
 
 	def _sift_down(self, index):
 		# Sift down the element at the given index for min-heap
-		self.size
 		while True:
 			left = 2 * index + 1
 			right = 2 * index + 2
@@ -121,22 +124,111 @@ class MinHeap(MaxHeap):
 			if smallest == index:
 				break
 
-			# Swap the current element with the smallest child
 			self.heap[index], self.heap[smallest] = self.heap[smallest], self.heap[index]
 			index = smallest
+		self._update_min()
+
+	def extract_min(self):
+		if self.is_empty():
+			print("Heap is empty. Cannot extract minimum. Cannot extract minimum.")
+			return None
+		minimum = self.min
+		self.heap[0] = self.heap[-1]
+		self.heap.pop()
+		self.size -= 1
+		if self.size > 0:
+			self._sift_down(0)
+		self._update_min()
+		return minimum
 
 	def update_value(self, old, new):
 		# Check if the old value exists in the heap
-		index = self.index(old)
-		if index is None:
-			print(f"Value {old} not found in the heap.")
+		try:
+			index = self.heap.index(old)
+		except ValueError:
+			print(f"Value {old} not found in the heap. Cannot update.")
 			return
-		# Update the value at the found index
 		self.heap[index] = new
-		# Restore the min-heap property
-		if new > old:
-			self._sift_down(index)
-		else:
+		if new < old:
 			self._sift_up(index)
-			
+		else:
+			self._sift_down(index)
+   
 
+class Stack:
+	def __init__(self, max_size):
+		self.stack = [None] * max_size 	# Internal list to store stack elements
+		self.size = 0               # Current number of elements in the stack
+		self.max_size = max_size    # Maximum allowed size of the stack
+		self.top = None             # The top element of the stack (None if empty)
+
+	def __str__(self):
+		return str(self.stack)
+
+	def _update_top(self):
+		self.top = self.stack[self.size - 1] if self.size > 0 else None
+
+	def is_empty(self):
+		return self.size == 0
+	
+	def push(self, item):
+		if self.size == self.max_size:
+			print("Stack is at maximum capacity. Cannot push.")
+			return
+		self.stack[self.size] = item
+		self.size += 1
+		self._update_top()
+
+	def pop(self):
+		if self.is_empty():
+			print("Stack is empty. Cannot pop.")
+			return None
+		item = self.stack[self.size - 1]
+		self.size -= 1
+		self.stack[self.size] = None
+		self._update_top()
+		return item
+
+
+class Queue:
+	def __init__(self, max_size):
+		self.queue = [None] * max_size
+		self.max_size = max_size
+		self.size = 0
+		self.head_index = None
+		self.tail_index = None
+
+	def __str__(self):
+		return str(self.queue)
+
+	def is_empty(self):
+		return self.size == 0
+
+	def enqueue(self, item):
+		if self.size == self.max_size:
+			print("Queue is full. Cannot enqueue item.")
+			return
+		if self.head_index is None:
+			self.head_index = 0
+		self.tail_index = (self.tail_index + 1) % self.max_size if self.tail_index is not None else 0
+		self.queue[self.tail_index] = item
+		self.size += 1
+  
+	def dequeue(self):
+		if self.is_empty():
+			print("Queue is empty. Cannot dequeue item.")
+			return
+		item = self.queue[self.head_index]
+		self.queue[self.head_index] = None
+		self.head_index = (self.head_index + 1) % self.max_size
+		self.size -= 1
+		if self.size == 0:
+			self.head_index = None
+			self.tail_index = None
+		return item
+
+	def head(self):
+		if self.is_empty():
+			print("Queue is empty. No head item.")
+			return
+		return self.queue[self.head_index]

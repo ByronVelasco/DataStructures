@@ -9,6 +9,12 @@ The repository is organized into the following components:
 - **`1 Heaps` Folder**:   
   This folder contains the theoretical framework and explanations for Heaps (Max Heap and Min Heap) data structure.
 
+- **`2 Stacks` Folder**:
+  This folder contains the theoretical framework and explanations for Stacks data structure.
+
+- **`3 Queues` Folder**:
+  This folder contains the theoretical framework and explanations for Queues data structure.
+
 - **`project_data_structures.py` Python Script**:   
   This Python script includes all the data structures developed specifically for this project.
 
