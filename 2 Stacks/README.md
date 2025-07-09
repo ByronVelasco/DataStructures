@@ -5,7 +5,7 @@ A **Stack** is a linear data structure that follows the Last-In, First-Out (LIFO
 ## Attributes
 - `self.stack`: A list that holds the elements of the stack.
 - `self.size`: An integer representing the current number of elements in the stack.
-- `self.max_size`: An integer representing the maximum size of the stack, which is useful for initializing the stack with a fixed capacity. Setting this to `None` (by default) allows for dynamic resizing.
+- `self.max_size`: An integer representing the maximum size of the stack, which is useful for initializing the stack with a fixed capacity.
 - `self.top`: An integer representing the top element of the stack, which is updated whenever an element is pushed or popped.
 
 ## Public Methods
