@@ -15,6 +15,9 @@ The repository is organized into the following components:
 - **`3 Queues` Folder**:
   This folder contains the theoretical framework and explanations for Queues data structure.
 
+- **`4 Singly Linked List` Folder**:  
+  This folder contains the theoretical framework and explanations for Singly Linked Lists data structure.
+
 - **`project_data_structures.py` Python Script**:   
   This Python script includes all the data structures developed specifically for this project.
 

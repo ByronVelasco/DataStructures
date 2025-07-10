@@ -232,3 +232,116 @@ class Queue:
 			print("Queue is empty. No head item.")
 			return
 		return self.queue[self.head_index]
+
+
+class NodeSLL:
+	def __init__(self, key=None):
+		"""Initialize a new node.
+		
+		Args:
+				data: The data to be stored in the node.
+		"""
+		self.key = key      	# key stored in the node
+		self.next = None      # Reference to the next node (initially None)
+    
+	def __str__(self) -> str:
+		"""Return a string representation of the node."""
+		return f"{self.key} -> {self.next}"
+
+
+class SinglyLinkedList:
+	def __init__(self):
+		"""Initialize a singly linked list with a sentinel node.
+		
+		The sentinel node simplifies insertion and deletion operations
+		by eliminating special cases for empty lists.
+		"""
+		self.sentinel = NodeSLL()  		# Sentinel node with no data
+		self.size = 0               # Number of elements in the list
+	
+	def __str__(self) -> str:
+		"""Return a string representation of the linked list."""
+		if self.size == 0:
+			return "Empty list"
+		
+		result = []
+		current = self.sentinel.next
+		while current is not None:
+			result.append(str(current.key))
+			current = current.next
+		return " -> ".join(result)
+	
+	def search(self, key) -> NodeSLL:
+		"""Search for a node with the given key.
+		
+		Args:
+			key: The key to search for.
+				
+		Returns:
+			Node: The node containing the key, or None if not found.
+		"""
+		current = self.sentinel.next
+		while current is not None and current.key != key:
+			current = current.next
+		return current
+	
+	def prepend(self, key) -> None:
+		"""Insert a new node at the beginning of the list.
+		
+		Args:
+			key: The key to be inserted.
+		"""
+		new_node = NodeSLL(key)
+		new_node.next = self.sentinel.next
+		self.sentinel.next = new_node
+		self.size += 1
+	
+	def insert(self, key, target_key) -> None:
+		"""Insert a new node after the node with the specified key.
+		
+		Args:
+			key: The key to be inserted.
+			target_key: The key of the node after which to insert.
+		"""
+		# Find the target node
+		current = self.sentinel.next
+		while current is not None and current.key != target_key:
+			current = current.next
+		
+		if current is None:
+			print(f"Target key {target_key} not found in the list.")
+			return
+		
+		# Insert the new node after the target node
+		new_node = NodeSLL(key)
+		new_node.next = current.next
+		current.next = new_node
+		self.size += 1
+	
+	def delete(self, key) -> bool:
+		"""Delete the first node with the given key.
+		
+		Args:
+			key: The key to be deleted.
+				
+		Returns:
+			bool: True if the node was deleted, False if not found.
+		"""
+		current = self.sentinel
+		while current.next is not None and current.next.key != key:
+			current = current.next
+		
+		if current.next is None:
+			return False  # Key not found
+		
+		current.next = current.next.next
+		self.size -= 1
+		return True
+	
+	def is_empty(self) -> bool:
+		"""Check if the list is empty.
+		
+		Returns:
+			bool: True if the list is empty, False otherwise.
+		"""
+		return self.size == 0
