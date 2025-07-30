@@ -11,6 +11,7 @@ A **Singly Linked List** is a linear data structure where elements (called nodes
 ### SinglyLinkedList Class
 - `self.sentinel`: A sentinel node with no data that simplifies insertion and deletion operations by eliminating special cases for empty lists.
 - `self.size`: An integer representing the current number of elements in the linked list.
+- `self.head`: A reference to the first node's key, which is initially `None` until the first node is added.
 
 ## Methods
 - `is_empty()`: Returns `True` if the linked list is empty, otherwise `False`.
