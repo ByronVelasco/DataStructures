@@ -153,7 +153,7 @@ class MinHeap(MaxHeap):
 			self._sift_up(index)
 		else:
 			self._sift_down(index)
-   
+
 
 class Stack:
 	def __init__(self, max_size):
@@ -246,7 +246,7 @@ class NodeSLL:
     
 	def __str__(self) -> str:
 		"""Return a string representation of the node."""
-		return f"{self.key} -> {self.next}"
+		return f"{self.key} -> {self.next.key}"
 
 
 class SinglyLinkedList:
@@ -257,7 +257,9 @@ class SinglyLinkedList:
 		by eliminating special cases for empty lists.
 		"""
 		self.sentinel = NodeSLL()  		# Sentinel node with no data
+		self.sentinel.next = self.sentinel  # Points to itself initially
 		self.size = 0               # Number of elements in the list
+		self.head = None						# Head points to the first node's key (initially None)
 	
 	def __str__(self) -> str:
 		"""Return a string representation of the linked list."""
@@ -266,7 +268,7 @@ class SinglyLinkedList:
 		
 		result = []
 		current = self.sentinel.next
-		while current is not None:
+		while current != self.sentinel:
 			result.append(str(current.key))
 			current = current.next
 		return " -> ".join(result)
@@ -281,7 +283,7 @@ class SinglyLinkedList:
 			Node: The node containing the key, or None if not found.
 		"""
 		current = self.sentinel.next
-		while current is not None and current.key != key:
+		while current != self.sentinel and current.key != key:
 			current = current.next
 		return current
 	
@@ -294,6 +296,7 @@ class SinglyLinkedList:
 		new_node = NodeSLL(key)
 		new_node.next = self.sentinel.next
 		self.sentinel.next = new_node
+		self.head = new_node.key
 		self.size += 1
 	
 	def insert(self, key, target_key) -> None:
@@ -304,11 +307,8 @@ class SinglyLinkedList:
 			target_key: The key of the node after which to insert.
 		"""
 		# Find the target node
-		current = self.sentinel.next
-		while current is not None and current.key != target_key:
-			current = current.next
-		
-		if current is None:
+		current = self.search(target_key)
+		if current == self.sentinel:
 			print(f"Target key {target_key} not found in the list.")
 			return
 		
@@ -328,13 +328,135 @@ class SinglyLinkedList:
 			bool: True if the node was deleted, False if not found.
 		"""
 		current = self.sentinel
-		while current.next is not None and current.next.key != key:
+		while current.next != self.sentinel and current.next.key != key:
 			current = current.next
 		
-		if current.next is None:
+		if current.next == self.sentinel:
 			return False  # Key not found
 		
 		current.next = current.next.next
+		self.size -= 1
+		self.head = self.sentinel.next.key
+		return True
+	
+	def is_empty(self) -> bool:
+		"""Check if the list is empty.
+		
+		Returns:
+			bool: True if the list is empty, False otherwise.
+		"""
+		return self.size == 0
+
+
+class NodeDLL:
+	def __init__(self, key=None):
+		"""Initialize a new node for doubly linked list.
+		
+		Args:
+			key: The data to be stored in the node.
+		"""
+		self.key = key        # key stored in the node
+		self.next = None      # Reference to the next node (initially None)
+		self.prev = None      # Reference to the previous node (initially None)
+	
+	def __str__(self) -> str:
+		"""Return a string representation of the node."""
+		return f"{self.prev.key} <- {self.key} -> {self.next.key}"
+
+
+class DoublyLinkedList:
+	def __init__(self):
+		"""Initialize a doubly linked list with a sentinel node.
+		
+		The sentinel node simplifies insertion and deletion operations
+		by eliminating special cases for empty lists.
+		"""
+		self.sentinel = NodeDLL()          # Sentinel node with no data
+		self.sentinel.next = self.sentinel  # Points to itself initially
+		self.sentinel.prev = self.sentinel  # Points to itself initially
+		self.size = 0                   # Number of elements in the list
+		self.head = None								# Head points to the first node (initially None)
+	
+	def __str__(self) -> str:
+		"""Return a string representation of the linked list."""
+		if self.size == 0:
+			return "Empty list"
+		
+		result = []
+		current = self.sentinel.next
+		while current != self.sentinel:
+			result.append(str(current.key))
+			current = current.next
+		return " <-> ".join(result)
+	
+	def search(self, key) -> NodeDLL:
+		"""Search for a node with the given key.
+		
+		Args:
+			key: The key to search for.
+				
+		Returns:
+			Node: The node containing the key, or None if not found.
+		"""
+		current = self.sentinel.next
+		while current != self.sentinel and current.key != key:
+			current = current.next
+		return current
+	
+	def prepend(self, key) -> None:
+		"""Insert a new node at the beginning of the list.
+		
+		Args:
+			key: The key to be inserted.
+		"""
+		new_node = NodeDLL(key)
+		new_node.next = self.sentinel.next
+		new_node.prev = self.sentinel
+		self.sentinel.next.prev = new_node
+		self.sentinel.next = new_node
+		self.head = new_node.key
+		self.size += 1
+	
+	def insert(self, key, target_key) -> None:
+		"""Insert a new node after the node with the specified key.
+		
+		Args:
+			key: The key to be inserted.
+			target_key: The key of the node after which to insert.
+		"""
+		# Find the target node
+		target_node = self.search(target_key)
+		
+		if target_node == self.sentinel:
+			print(f"Target key {target_key} not found in the list.")
+			return
+		
+		# Insert the new node after the target node
+		new_node = NodeDLL(key)
+		new_node.next = target_node.next
+		new_node.prev = target_node
+		target_node.next.prev = new_node
+		target_node.next = new_node
+		self.size += 1
+	
+	def delete(self, key) -> bool:
+		"""Delete the first node with the given key.
+		
+		Args:
+			key: The key to be deleted.
+
+		Returns:
+			bool: True if the node was deleted, False if not found.
+		"""
+		node_to_delete = self.search(key)
+		
+		if node_to_delete == self.sentinel:
+			return False  # Key not found
+		
+		# Update the prev and next pointers
+		node_to_delete.prev.next = node_to_delete.next
+		node_to_delete.next.prev = node_to_delete.prev
+		self.head = self.sentinel.next.key
 		self.size -= 1
 		return True
 	

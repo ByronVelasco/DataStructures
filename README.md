@@ -18,6 +18,9 @@ The repository is organized into the following components:
 - **`4 Singly Linked List` Folder**:  
   This folder contains the theoretical framework and explanations for Singly Linked Lists data structure.
 
+- **`5 Doubly Linked List` Folder**:
+  This folder contains the theoretical framework and explanations for Doubly Linked Lists data structure.
+
 - **`project_data_structures.py` Python Script**:   
   This Python script includes all the data structures developed specifically for this project.
 
