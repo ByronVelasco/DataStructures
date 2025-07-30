@@ -15,7 +15,7 @@ A **Singly Linked List** is a linear data structure where elements (called nodes
 
 ## Methods
 - `is_empty()`: Returns `True` if the linked list is empty, otherwise `False`.
-- `search(key)`: Searches for a node with the given key and returns the node if found, otherwise returns `None`.
+- `search(key)`: Searches for a node with the given key and returns the node if found (returns the sentinel node if not found).
 - `prepend(key)`: Inserts a new node with the given key at the beginning of the linked list.
 - `insert(key, target_key)`: Inserts a new node with the given key after the node containing the target key. If the target key is not found, it warns and does not insert.
 - `delete(key)`: Removes the first node with the given key from the linked list. Returns `True` if the node was deleted, `False` if not found.
