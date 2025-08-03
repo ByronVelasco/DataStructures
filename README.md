@@ -21,6 +21,9 @@ The repository is organized into the following components:
 - **`5 Doubly Linked List` Folder**:
   This folder contains the theoretical framework and explanations for Doubly Linked Lists data structure.
 
+- **`6 Trees` Folder**:
+  This folder contains the theoretical framework and explanations for Trees data structure, including Binary Trees and Left-Child Right-Sibling Trees.
+
 - **`project_data_structures.py` Python Script**:   
   This Python script includes all the data structures developed specifically for this project.
 

@@ -467,3 +467,180 @@ class DoublyLinkedList:
 			bool: True if the list is empty, False otherwise.
 		"""
 		return self.size == 0
+
+
+class BTNode:
+	def __init__(self, key):
+		"""Initialize a node with a key and no children or parent."""
+		self.left = None
+		self.right = None
+		self.parent = None
+		self.val = key
+  
+class BinaryTree:
+	def __init__(self):
+		"""Initialize a binary tree with no root."""
+		self.root = None
+  
+	def __str__(self):
+		"""Return a string representation of the binary tree."""
+		if self.root is None:
+			return "Empty tree"
+		
+		result = []
+		self._build_string(self.root, 0, result)
+		return "\n".join(result)
+
+	def _build_string(self, node, level, result):
+		"""Helper method to build string representation recursively.
+		
+		Args:
+			node: Current node being processed.
+			level: Current depth level in the tree.
+			result: List to store the string lines.
+		"""
+		if node is None:
+			return
+		
+		# Add current node with indentation based on level
+		indent = "  " * level
+		result.append(f"{indent}{node.val}")
+		
+		# Process left child first, then right child
+		if node.left is not None:
+			self._build_string(node.left, level + 1, result)
+		
+		if node.right is not None:
+			self._build_string(node.right, level + 1, result)
+	
+	def insert(self, key):
+		"""Insert a new node with level-order insertion (left to right, level by level).
+		
+		Args:
+			key: The value to be inserted.
+		"""
+		new_node = BTNode(key)
+		
+		# If tree is empty, make the new node the root
+		if self.root is None:
+			self.root = new_node
+			return
+		
+		# Use a queue for level-order traversal to find the insertion point
+		queue = [self.root]
+		
+		while queue:
+			current = queue.pop(0)  # Dequeue from front
+			
+			# Check left child
+			if current.left is None:
+				current.left = new_node
+				new_node.parent = current
+				return
+			else:
+				queue.append(current.left)  # Enqueue left child
+			
+			# Check right child
+			if current.right is None:
+				current.right = new_node
+				new_node.parent = current
+				return
+			else:
+				queue.append(current.right)  # Enqueue right child
+    
+    
+class LCRSNode:
+	def __init__(self, key):
+		self.left_child = None
+		self.right_sibling = None
+		self.parent = None
+		self.val = key
+  
+class LeftChildRightSibling:
+	def __init__(self):
+		"""Initialize a tree using left-child, right-sibling representation with no root."""
+		self.root = None
+  
+	def __str__(self):
+		"""Return a string representation of the entire tree."""
+		if self.root is None:
+			return "Empty tree"
+		
+		result = []
+		self._build_string(self.root, 0, result)
+		return "\n".join(result)
+
+	def _build_string(self, node, level, result):
+		"""Helper method to build string representation recursively.
+		
+		Args:
+				node: Current node being processed.
+				level: Current depth level in the tree.
+				result: List to store the string lines.
+		"""
+		if node is None:
+			return
+		
+		# Add current node with indentation based on level
+		indent = "  " * level
+		result.append(f"{indent}{node.val}")
+		
+		# Process all children (traverse siblings)
+		child = node.left_child
+		while child is not None:
+			self._build_string(child, level + 1, result)
+			child = child.right_sibling
+  
+	def search(self, key):
+		"""Search using breadth-first (level-by-level) traversal."""
+		if self.root is None:
+			return None
+		
+		queue = [self.root]
+		
+		while queue:
+			current = queue.pop(0)  # Dequeue from front
+			
+			if current.val == key:
+				return current
+			
+			# Add all children to queue
+			child = current.left_child
+			while child is not None:
+				queue.append(child)
+				child = child.right_sibling
+		
+		return None
+
+	def insert(self, parent_key, child_key):
+		"""Insert a new node as a child of the specified parent.
+		
+		Args:
+			parent_key: The key of the parent node where the child will be added.
+			child_key: The key of the new child node to be inserted.
+		"""
+		new_node = LCRSNode(child_key)
+		
+		# If tree is empty, create root
+		if self.root is None:
+			self.root = new_node
+			return
+		
+		# Find the parent node
+		parent_node = self.search(parent_key)
+		if parent_node is None:
+			print(f"Parent node with key {parent_key} not found.")
+			return
+		
+		# Set parent relationship
+		new_node.parent = parent_node
+		
+		# If parent has no children, make this the first child
+		if parent_node.left_child is None:
+			parent_node.left_child = new_node
+		else:
+			# Add as the rightmost sibling
+			current = parent_node.left_child
+			while current.right_sibling is not None:
+					current = current.right_sibling
+			current.right_sibling = new_node
